@@ -147,7 +147,7 @@
       <a href="#obligations">Obligations</a>
       <a href="#apply">Apply</a>
       <a href="#ecosystem">Ecosystem</a>
-      <a class="navcta" href="SAIL-GPL-1.0.md">Read the License</a>
+      <a class="navcta" href="../SAIL-GPL-1.0.md">Read the License</a>
     </nav>
     <button class="burger" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
   </div>
@@ -165,7 +165,7 @@
     <p class="lead">A copyleft license for AI model artifacts in which <b style="color:var(--txt)">cybersecurity is a condition of the grant</b>: signed provenance, an AI Bill of Materials, a red‑team attestation, and a vulnerability‑disclosure contact must ship with every release — and travel with every fine‑tune.</p>
     <div class="quote">"You may own the weights. You may not ship them unverifiable."</div>
     <div class="btns">
-      <a class="btn primary" href="SAIL-GPL-1.0.md">Read the License</a>
+      <a class="btn primary" href="../SAIL-GPL-1.0.md">Read the License</a>
       <a class="btn ghost" href="#apply">Apply it to a model</a>
       <a class="btn ghost" href="#compare">How it differs</a>
     </div>
@@ -307,9 +307,26 @@ Security contact: security@your-domain.example</pre>
       </div>
     </div>
     <h3 style="font-size:1rem;margin:26px 0 8px">3 · The toolkit — one CLI, <code class="inl">sail</code></h3>
-    <pre><span class="k">sail sign</span> ./model/      <span class="c"># build the OMS manifest, sign it (keyless Sigstore / PKI / PQ-hybrid), write srm/</span>
+    <p class="muted" style="margin:0 0 10px;font-size:.92rem">A reference Python implementation lives in the repository. It builds, signs, and verifies the §7 bundle. Verification is open and re‑implementable (§7.7) — canonical JSON and SHA‑256, no proprietary tooling.</p>
+    <pre><span class="c"># install (Ed25519 / ECDSA, add [pq] for ML-DSA / hybrid, FIPS 204)</span>
+<span class="k">pip install</span> -e ./sail            <span class="c"># or:  pip install -e './sail[pq]'</span>
+
+<span class="k">sail sign</span> ./model/      <span class="c"># build the OMS manifest, sign it (Ed25519 / ECDSA / PQ-hybrid), write srm/</span>
 <span class="k">sail verify</span> ./model/    <span class="c"># check signature, manifest completeness, AIBOM, attestation, CVD contact  [--pq-only --strict-issuer]</span>
 <span class="k">sail audit</span> ./release/   <span class="c"># walk a directory tree, report artifacts missing compliant §7 SRM</span></pre>
+    <h3 style="font-size:1rem;margin:22px 0 8px">A worked example</h3>
+    <pre><span class="c"># sign the example model at tier T1 with a fresh key and a disclosure contact</span>
+<span class="k">sail sign</span> ./example-model \
+  --model-name sail-example --model-version 1.0.0 --tier T1 \
+  --contact security@example.org --key ./signing.key
+
+<span class="c"># verify it (add --pq-only at T2/T3, --strict-issuer to pin an issuer)</span>
+<span class="k">sail verify</span> ./example-model</pre>
+    <p class="muted" style="margin:0 0 14px;font-size:.92rem"><code class="inl">verify</code> prints a per‑check PASS/FAIL report and returns <b style="color:var(--txt)">COMPLIANT</b> or <b style="color:var(--txt)">NON‑COMPLIANT</b>. The exit code reflects the result, so it drops straight into CI.</p>
+    <div class="btns" style="margin-bottom:18px">
+      <a class="btn primary" href="https://github.com/Grigaliunas/SAIL-GPL/tree/main/sail">Toolkit source</a>
+      <a class="btn ghost" href="https://github.com/Grigaliunas/SAIL-GPL/tree/main/example-model">Signed example bundle</a>
+    </div>
     <div class="warnbox">⚠ SAIL‑GPL v1.0 is a public <b>draft proposal</b> and engineering spec — not legal advice and not yet an OSI/SPDX‑registered license. Review with counsel before production use.</div>
   </div>
 </section>
@@ -344,10 +361,12 @@ Security contact: security@your-domain.example</pre>
       <div>
         <h5>License</h5>
         <ul>
-          <li><a href="SAIL-GPL-1.0.md">Read the full spec (.md)</a></li>
+          <li><a href="../SAIL-GPL-1.0.md">Read the full spec (.md)</a></li>
           <li><a href="#obligations">Section 7 obligations</a></li>
           <li><a href="#apply">How to apply</a></li>
           <li><a href="#compare">Comparison</a></li>
+          <li><a href="https://github.com/Grigaliunas/SAIL-GPL/tree/main/sail">sail toolkit</a></li>
+          <li><a href="https://github.com/Grigaliunas/SAIL-GPL/tree/main/example-model">Example bundle</a></li>
         </ul>
       </div>
       <div>

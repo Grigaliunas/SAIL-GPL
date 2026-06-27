@@ -15,8 +15,8 @@ It is a **license proposal and engineering specification, not legal advice.** Ha
 | File | What it is |
 |---|---|
 | [`SAIL-GPL-1.0.md`](SAIL-GPL-1.0.md) | The canonical license text (§0–§17) — the source of truth. |
-| [`sail-gpl.html`](sail-gpl.html) | A self‑contained landing page presenting the license. |
-| [`sail-gpl-fullpage.png`](sail-gpl-fullpage.png) | Full‑page render of the landing page. |
+| [`web/sail-gpl.html`](web/sail-gpl.html) | A self‑contained landing page presenting the license. |
+| [`web/sail-gpl-fullpage.png`](web/sail-gpl-fullpage.png) | Full‑page render of the landing page. |
 | [`sail/`](sail) | Reference `sail` toolkit (Python) — `sign` / `verify` / `audit` for SRM bundles (§14.3). |
 | [`example-model/`](example-model) | A complete, signed Secure‑Release Metadata bundle (§14.2). |
 | [`CLAUDE.md`](CLAUDE.md) | Guidance for working in this repository. |
@@ -38,7 +38,7 @@ Obligations scale with capability tier (T0 research through T3 frontier / high�
 
 ## Preview
 
-![SAIL‑GPL landing page](sail-gpl-fullpage.png)
+![SAIL‑GPL landing page](web/sail-gpl-fullpage.png)
 
 ## Status
 
