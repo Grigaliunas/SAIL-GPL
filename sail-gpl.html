@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAIL‑GPL — Secure AI General Public License</title>
+<meta name="description" content="The Secure AI General Public License (SAIL-GPL) v1.0 — a copyleft license for AI models with mandatory release-time cybersecurity: signed provenance, AIBOM, red-team attestation, and coordinated vulnerability disclosure." />
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0b1322; --panel:#0e1828; --panel2:#111f33;
+    --line:#1d2c44; --line2:#27395a;
+    --txt:#e7eefb; --muted:#94a6c4; --faint:#6b7d9c;
+    --accent:#38e0b0;      /* verified / secure */
+    --accent2:#5aa9ff;     /* trust / signal */
+    --warn:#ff7a6b;        /* threat */
+    --violet:#9d8bff;
+    --maxw:1080px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(900px 500px at 80% -10%, rgba(90,169,255,.10), transparent 60%),
+      radial-gradient(800px 480px at 0% 10%, rgba(56,224,176,.08), transparent 55%),
+      var(--bg);
+    color:var(--txt);font-family:var(--sans);line-height:1.62;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  h1,h2,h3{line-height:1.18;letter-spacing:-.01em}
+  h2{font-size:clamp(1.5rem,3vw,2.1rem);margin:0 0 6px}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+  .muted{color:var(--muted)}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(7,11,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em}
+  .brand .dot{width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 14px rgba(56,224,176,.6)}
+  .brand small{font-family:var(--mono);font-weight:500;color:var(--faint);font-size:.68rem;letter-spacing:.12em}
+  nav.links{display:flex;gap:22px;font-size:.9rem}
+  nav.links a{color:var(--muted)}
+  nav.links a:hover{color:var(--txt);text-decoration:none}
+  .navcta{border:1px solid var(--line2);padding:7px 14px;border-radius:8px;color:var(--txt)!important;font-size:.85rem}
+  .navcta:hover{border-color:var(--accent);text-decoration:none}
+  .burger{display:none;background:none;border:0;color:var(--txt);font-size:1.4rem;cursor:pointer}
+
+  /* hero */
+  .hero{padding:78px 0 54px;border-bottom:1px solid var(--line)}
+  .chiprow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+  .chip{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;background:var(--panel)}
+  .chip b{color:var(--accent)}
+  .hero h1{font-size:clamp(2.1rem,5.4vw,3.5rem);margin:0 0 16px;background:linear-gradient(180deg,#fff,#bcd0f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:clamp(1.05rem,2vw,1.28rem);color:var(--muted);max-width:760px;margin:0 0 18px}
+  .quote{font-family:var(--mono);color:var(--accent);border-left:2px solid var(--accent);padding:6px 0 6px 16px;margin:24px 0 30px;font-size:1.02rem}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 20px;border-radius:10px;font-weight:600;font-size:.94rem}
+  .btn.primary{background:linear-gradient(135deg,var(--accent),#27b894);color:#04140f}
+  .btn.primary:hover{filter:brightness(1.07);text-decoration:none}
+  .btn.ghost{border:1px solid var(--line2);color:var(--txt)}
+  .btn.ghost:hover{border-color:var(--accent2);text-decoration:none}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line)}
+  .sec-head{margin-bottom:30px;max-width:760px}
+  .sec-head p{color:var(--muted);margin:.4rem 0 0}
+
+  /* threat cards */
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:1.08rem}
+  .card .n{font-family:var(--mono);font-size:.74rem;color:var(--warn);letter-spacing:.12em}
+  .card.secure .n{color:var(--accent)}
+  .card p{margin:0;color:var(--muted);font-size:.95rem}
+
+  /* principles */
+  .principle{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
+  .principle:first-child{border-top:0}
+  .principle .num{font-family:var(--mono);font-size:1.5rem;color:var(--accent2);min-width:54px;opacity:.9}
+  .principle h3{margin:0 0 4px;font-size:1.12rem}
+  .principle p{margin:0;color:var(--muted)}
+
+  /* table */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  table{border-collapse:collapse;width:100%;min-width:680px;font-size:.9rem}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+  thead th{background:var(--panel2);color:var(--txt);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+  th.feat,td.feat{color:var(--muted)}
+  td.sail{color:var(--txt);font-weight:600}
+  col.sailcol{background:rgba(56,224,176,.06)}
+  .yes{color:var(--accent);font-weight:700}
+  .no{color:var(--faint)}
+  .partial{color:var(--violet)}
+  tbody tr:last-child td{border-bottom:0}
+
+  /* obligations */
+  .ob{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .ob .item{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px}
+  .ob .item code{color:var(--accent);font-family:var(--mono);font-size:.78rem}
+  .ob .item h4{margin:.2rem 0 6px;font-size:1rem}
+  .ob .item p{margin:0;color:var(--muted);font-size:.9rem}
+
+  /* tiers */
+  .tier{display:grid;grid-template-columns:90px 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px}
+  .tier .lvl{background:var(--panel2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;color:var(--accent2)}
+  .tier .body{padding:14px 18px}
+  .tier .body b{color:var(--txt)} .tier .body p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+
+  /* code */
+  pre{background:#05090f;border:1px solid var(--line);border-radius:12px;padding:18px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;color:#cfe0ff;line-height:1.55}
+  pre .c{color:var(--faint)} pre .k{color:var(--accent)} pre .s{color:var(--violet)}
+  code.inl{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:.85em;color:var(--accent)}
+
+  /* eco */
+  .eco{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .eco a.tile{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--txt)}
+  .eco a.tile:hover{border-color:var(--accent2);text-decoration:none;transform:translateY(-2px);transition:.15s}
+  .eco .tile h4{margin:0 0 6px} .eco .tile p{margin:0;color:var(--muted);font-size:.88rem}
+  .eco .tile span{font-family:var(--mono);font-size:.72rem;color:var(--accent)}
+
+  footer{padding:50px 0 60px;color:var(--faint);font-size:.86rem}
+  .footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:26px;margin-bottom:30px}
+  footer h5{color:var(--txt);margin:0 0 10px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+  footer ul{list-style:none;margin:0;padding:0} footer li{margin:6px 0}
+  footer a{color:var(--muted)} .disc{border-top:1px solid var(--line);padding-top:18px;line-height:1.5}
+  .warnbox{background:rgba(255,122,107,.07);border:1px solid rgba(255,122,107,.3);border-radius:10px;padding:12px 16px;color:#ffc3ba;font-size:.84rem;margin-top:18px}
+
+  @media(max-width:860px){
+    .g3,.g2,.ob,.eco,.footgrid{grid-template-columns:1fr}
+    nav.links{display:none}
+    nav.links.open{display:flex;position:absolute;top:62px;left:0;right:0;flex-direction:column;background:var(--bg2);padding:16px 22px;border-bottom:1px solid var(--line)}
+    .burger{display:block}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> SAIL‑GPL <small>v1.0 · SECURE AI</small></div>
+    <nav class="links" id="links">
+      <a href="#why">Why</a>
+      <a href="#principles">Principles</a>
+      <a href="#compare">Compare</a>
+      <a href="#obligations">Obligations</a>
+      <a href="#apply">Apply</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a class="navcta" href="SAIL-GPL-1.0.md">Read the License</a>
+    </nav>
+    <button class="burger" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="chiprow">
+      <span class="chip">Secure AI General Public License</span>
+      <span class="chip">SPDX: <b>SAIL‑GPL‑1.0</b> (proposed)</span>
+      <span class="chip">The Open Reality Initiative</span>
+    </div>
+    <h1>Copyleft for AI models —<br/>with security that can't be stripped.</h1>
+    <p class="lead">A copyleft license for AI model artifacts in which <b style="color:var(--txt)">cybersecurity is a condition of the grant</b>: signed provenance, an AI Bill of Materials, a red‑team attestation, and a vulnerability‑disclosure contact must ship with every release — and travel with every fine‑tune.</p>
+    <div class="quote">"You may own the weights. You may not ship them unverifiable."</div>
+    <div class="btns">
+      <a class="btn primary" href="SAIL-GPL-1.0.md">Read the License</a>
+      <a class="btn ghost" href="#apply">Apply it to a model</a>
+      <a class="btn ghost" href="#compare">How it differs</a>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Why SAIL‑GPL</p>
+      <h2>Open weights that no one can verify are not open. They are forgeable.</h2>
+      <p>An AI model is a claim about how it was made. Yet most model licenses say nothing about whether that claim can be checked. The supply chain became the attack surface — and the license layer never caught up.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="n">01 · TAMPER</div><h3>Poisoned & swapped</h3><p>Poisoned packages have compromised tens of thousands of AI pipelines. Malicious LoRA adapters and model‑source tampering ride into deployments unnoticed.</p></div>
+      <div class="card"><div class="n">02 · NO PROVENANCE</div><h3>Weights without origin</h3><p>Model cards offer no guarantee of origin. Once a model is fine‑tuned, merged and re‑hosted a few times, its lineage — and its trust — collapses.</p></div>
+      <div class="card"><div class="n">03 · VOLUNTARY ONLY</div><h3>Good tools, no obligation</h3><p>OMS signing, Sigstore transparency, CoSAI and SAIF are excellent — but optional. Nothing makes secure release the <em>default</em> at the licensing layer.</p></div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card secure"><div class="n">THE GAP</div><h3>Ethics ≠ security</h3><p>OpenRAIL propagates <em>ethical‑use</em> restrictions downstream. OpenMDW & Apache‑2.0 grant <em>permissive</em> freedom. Neither makes <b style="color:var(--txt)">integrity, provenance and security</b> a copyleft obligation.</p></div>
+      <div class="card secure"><div class="n">THE FIX</div><h3>Security as copyleft</h3><p>SAIL‑GPL takes RAIL's proven propagation mechanism and points it at <b style="color:var(--txt)">cybersecurity</b>: what rides the model, rides every derivative. Strip the security, lose the license.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section id="principles">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Principles</p>
+      <h2>Five principles of SAIL‑GPL</h2>
+    </div>
+    <div class="principle"><div class="num">01</div><div><h3>Verifiable Origin</h3><p>A model that cannot be cryptographically traced to its maker is untrusted by default. Unsigned is unsafe.</p></div></div>
+    <div class="principle"><div class="num">02</div><div><h3>Inseparable Security</h3><p>Security obligations are entangled with the weights. Fine‑tuning, quantizing, merging or re‑hosting cannot remove them — only renew them.</p></div></div>
+    <div class="principle"><div class="num">03</div><div><h3>Independence from Infrastructure</h3><p>You may own the GPUs, the cluster, the serving stack. You do not own an exemption. The duty attaches to the artifact, wherever it runs.</p></div></div>
+    <div class="principle"><div class="num">04</div><div><h3>Transparency of Risk</h3><p>Capability without disclosed limits is a liability. Known weaknesses, evaluations and intended‑use boundaries travel with the model.</p></div></div>
+    <div class="principle"><div class="num">05</div><div><h3>Coordinated Resilience</h3><p>Integrity must outlive one release: revisions are re‑signed, algorithms stay agile and post‑quantum‑ready, and vulnerabilities are disclosed, not buried.</p></div></div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Compare</p>
+      <h2>Where SAIL‑GPL sits</h2>
+      <p>All are licenses for model artifacts. They enforce different things. SAIL‑GPL is the only one that makes release‑time security a share‑alike obligation.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <colgroup><col/><col/><col/><col/><col class="sailcol"/></colgroup>
+        <thead><tr>
+          <th class="feat">Property</th><th>Apache‑2.0 / OpenMDW</th><th>OpenRAIL</th><th>Llama‑style</th><th>SAIL‑GPL v1.0</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="feat">Primary subject</td><td>Model/weights as data</td><td>AI artifact</td><td>Model/weights</td><td class="sail">AI Model Artifact</td></tr>
+          <tr><td class="feat">Weights‑as‑data / database rights</td><td class="yes">Yes (OpenMDW)</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="sail yes">Yes</td></tr>
+          <tr><td class="feat">Copyleft / share‑alike</td><td class="no">No</td><td>Behavioral copyleft</td><td class="no">No</td><td class="sail yes">Yes (security copyleft)</td></tr>
+          <tr><td class="feat">Mandatory signing &amp; provenance</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="sail yes">Yes (OMS, §7.1)</td></tr>
+          <tr><td class="feat">AIBOM required</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="sail yes">Yes (§7.2)</td></tr>
+          <tr><td class="feat">Adversarial / red‑team attestation</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="sail yes">Yes, tiered (§7.4)</td></tr>
+          <tr><td class="feat">Coordinated vuln disclosure</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="sail yes">Yes (§7.6)</td></tr>
+          <tr><td class="feat">Crypto‑agility / post‑quantum‑ready</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="sail yes">Required agility, PQ for T3 (§7.5)</td></tr>
+          <tr><td class="feat">Ethical‑use restrictions</td><td class="no">No</td><td class="yes">Yes</td><td>Acceptable‑use</td><td class="sail">Optional annex (§9.3)</td></tr>
+          <tr><td class="feat">Patent grant and retaliation</td><td class="yes">Yes</td><td>Varies</td><td class="partial">Limited</td><td class="sail yes">Yes (§10)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:14px;font-size:.9rem">SAIL‑GPL complements, not replaces. Keep your training and inference <em>source code</em> under Apache‑2.0 or GPL, and release the <em>model artifact</em> it produces under SAIL‑GPL.</p>
+  </div>
+</section>
+
+<!-- OBLIGATIONS -->
+<section id="obligations">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Section 7 · the core</p>
+      <h2>Secure‑Release Metadata</h2>
+      <p>Every distribution must ship a complete, verifiable SRM bundle. A release without it is a license violation (curable within 30 days). Obligations scale with capability tier.</p>
+    </div>
+    <div class="ob">
+      <div class="item"><code>§7.1</code><h4>Signed provenance</h4><p>An OpenSSF Model Signing (OMS) signature over a manifest hashing <em>all</em> files — weights, config, tokenizer, code. Keyless (Sigstore), PKI, or hybrid.</p></div>
+      <div class="item"><code>§7.2</code><h4>AI Bill of Materials</h4><p>Machine‑readable AIBOM: base model, datasets or data‑provenance statement, adapters, dependencies, pipeline. SPDX 3.0 AI / CycloneDX‑ML.</p></div>
+      <div class="item"><code>§7.3</code><h4>Model card and risk</h4><p>Intended use, out‑of‑scope use, known failure modes, security‑relevant evals — aligned to the NIST AI RMF.</p></div>
+      <div class="item"><code>§7.4</code><h4>Adversarial attestation</h4><p>Signed test results vs. OWASP LLM Top 10, MITRE ATLAS and the CoSAI Risk Map: prompt injection, data extraction, poisoning.</p></div>
+      <div class="item"><code>§7.5</code><h4>Crypto‑agility</h4><p>Declared algorithms, re‑signing on revision, and post‑quantum / hybrid signatures (ML‑DSA, FIPS 204) for long‑lived & frontier models.</p></div>
+      <div class="item"><code>§7.6</code><h4>Coordinated disclosure</h4><p>A published security contact and CVD policy (<code class="inl">SECURITY.md</code>) that propagates to every derivative.</p></div>
+      <div class="item"><code>§7.7</code><h4>Open verification</h4><p>The format and tooling to verify compliance must be open and re‑implementable — no single‑vendor, fee‑bearing checks.</p></div>
+      <div class="item"><code>§7.8</code><h4>Re‑attest on derivation</h4><p>Fine‑tune, merge or quantize, then re‑sign, update the AIBOM, refresh the card, and attest new risks. Security is renewed, never discharged.</p></div>
+    </div>
+
+    <h3 style="margin:34px 0 14px;font-size:1.05rem;color:var(--muted)">Obligations scale with risk</h3>
+    <div class="tier"><div class="lvl">T0</div><div class="body"><b>Research / not conveyed</b><p>Internal only — nothing triggered. Distribution moves you to at least T1.</p></div></div>
+    <div class="tier"><div class="lvl">T1</div><div class="body"><b>Open release, low capability</b><p>Signing, AIBOM, model card, CVD, open verification. Lightweight self‑attestation.</p></div></div>
+    <div class="tier"><div class="lvl">T2</div><div class="body"><b>General‑purpose / product‑embedded</b><p>All of §7, with the full minimum adversarial test set. Hybrid post‑quantum signing recommended.</p></div></div>
+    <div class="tier"><div class="lvl">T3</div><div class="body"><b>Frontier / high‑risk (EU AI Act Annex III‑type)</b><p>Strongest setting, with an independent red‑team. PQ/hybrid signatures and transparency‑log inclusion required.</p></div></div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section id="apply">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Apply</p>
+      <h2>Use SAIL‑GPL on your model</h2>
+      <p>Attach the notice, ship the <code class="inl">srm/</code> bundle, and verify with the reference CLI.</p>
+    </div>
+    <div class="grid g2">
+      <div>
+        <h3 style="font-size:1rem;margin:0 0 8px">1 · The notice</h3>
+        <pre><span class="c">AI MODEL ARTIFACT NOTICE</span>
+This Model Artifact is released under the Secure AI General
+Public License (<span class="k">SAIL-GPL</span>) v1.0 — Assured-Integrity Edition.
+
+You may use, study, modify, and distribute this Model under
+the terms of SAIL-GPL v1.0. Any distribution of this Model or
+a Derivative Model MUST ship complete Secure-Release Metadata
+(Section 7): signed manifest, AIBOM, model card, security
+attestation, and a coordinated-vulnerability-disclosure contact.
+
+Secure-Release Metadata for this distribution is provided in /srm.
+<span class="s">SPDX-License-Identifier: SAIL-GPL-1.0</span>
+Security contact: security@your-domain.example</pre>
+      </div>
+      <div>
+        <h3 style="font-size:1rem;margin:0 0 8px">2 · The bundle</h3>
+        <pre>model/
+├─ model.safetensors
+├─ config.json
+├─ tokenizer.json
+├─ MODEL_CARD.md
+└─ srm/
+   ├─ manifest.json            <span class="c"># hashes of all model files (OMS)</span>
+   ├─ model.sig                <span class="c"># detached signature (ML-DSA / ECDSA / hybrid)</span>
+   ├─ aibom.spdx.json          <span class="c"># AI Bill of Materials (SPDX 3.0 AI / CycloneDX-ML)</span>
+   ├─ security-attestation.json<span class="c"># §7.4 adversarial test results, signed</span>
+   └─ SECURITY.md              <span class="c"># §7.6 CVD policy & contact</span></pre>
+      </div>
+    </div>
+    <h3 style="font-size:1rem;margin:26px 0 8px">3 · The toolkit — one CLI, <code class="inl">sail</code></h3>
+    <pre><span class="k">sail sign</span> ./model/      <span class="c"># build the OMS manifest, sign it (keyless Sigstore / PKI / PQ-hybrid), write srm/</span>
+<span class="k">sail verify</span> ./model/    <span class="c"># check signature, manifest completeness, AIBOM, attestation, CVD contact  [--pq-only --strict-issuer]</span>
+<span class="k">sail audit</span> ./release/   <span class="c"># walk a directory tree, report artifacts missing compliant §7 SRM</span></pre>
+    <div class="warnbox">⚠ SAIL‑GPL v1.0 is a public <b>draft proposal</b> and engineering spec — not legal advice and not yet an OSI/SPDX‑registered license. Review with counsel before production use.</div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Ecosystem</p>
+      <h2>A licensing layer, with company</h2>
+      <p>SAIL‑GPL secures the <b style="color:var(--txt)">model</b>. QGPL secures the <b style="color:var(--txt)">outputs</b>. ResilQ measures the <b style="color:var(--txt)">readiness</b>. One signing root can cover all three.</p>
+    </div>
+    <div class="eco">
+      <a class="tile" href="https://qgpl.org"><span>SIBLING LICENSE</span><h4>QGPL</h4><p>Quantum‑Safe Copyleft for Observation Outputs — post‑quantum release integrity for data, AI outputs and calculations.</p></a>
+      <a class="tile" href="https://rqmod.com"><span>RISK & READINESS</span><h4>ResilQ / RQmod</h4><p>Technical post‑quantum risk assessment — cryptographic inventory, exposure scoring and migration roadmaps.</p></a>
+      <a class="tile" href="https://sarunasgrigaliunas.lt"><span>AUTHOR</span><h4>Dr. Šarūnas Grigaliūnas</h4><p>Maintainer of the SAIL‑GPL & QGPL specifications under The Open Reality Initiative.</p></a>
+    </div>
+    <h3 style="margin:30px 0 12px;font-size:.95rem;color:var(--muted)">Built on, and aligned with</h3>
+    <p class="muted" style="font-size:.92rem">OpenSSF Model Signing (OMS) · Sigstore Model Transparency · Coalition for Secure AI (CoSAI) · Google SAIF · NIST AI RMF · OWASP Top 10 for LLM Applications · MITRE ATLAS · SPDX 3.0 AI / CycloneDX‑ML · SLSA · FIPS 203/204/205 · EU AI Act · Cyber Resilience Act · NIS2 · ISO/IEC 42001.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <h5>SAIL‑GPL</h5>
+        <p class="muted" style="margin:0">A copyleft license for AI model artifacts with mandatory release‑time cybersecurity. Maintained under The Open Reality Initiative.</p>
+        <div class="quote" style="margin:18px 0 0;font-size:.9rem">"What rides the model, rides every derivative."</div>
+      </div>
+      <div>
+        <h5>License</h5>
+        <ul>
+          <li><a href="SAIL-GPL-1.0.md">Read the full spec (.md)</a></li>
+          <li><a href="#obligations">Section 7 obligations</a></li>
+          <li><a href="#apply">How to apply</a></li>
+          <li><a href="#compare">Comparison</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Ecosystem</h5>
+        <ul>
+          <li><a href="https://qgpl.org">QGPL — outputs</a></li>
+          <li><a href="https://rqmod.com">ResilQ / RQmod</a></li>
+          <li><a href="https://sarunasgrigaliunas.lt">Author</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="disc">© 2026 Dr. Šarūnas Grigaliūnas · The Open Reality Initiative · SAIL‑GPL v1.0 — Assured‑Integrity Edition · SPDX <code class="inl">SAIL-GPL-1.0</code> (proposed). Verbatim copies of the license document are permitted. Modification of the license text is not. This site is a proposal for community and counsel review — not legal advice.</div>
+  </div>
+</footer>
+
+<script>
+  // close mobile menu on link click
+  document.querySelectorAll('#links a').forEach(function(a){
+    a.addEventListener('click',function(){document.getElementById('links').classList.remove('open');});
+  });
+</script>
+</body>
+</html>
