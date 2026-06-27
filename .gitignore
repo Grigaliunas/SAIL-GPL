@@ -16,3 +16,6 @@ venv/
 # Signing keys must never be committed (SAIL-GPL §7.1)
 *.key
 signing.key
+
+# Local-only project guidance (not shared)
+CLAUDE.md
