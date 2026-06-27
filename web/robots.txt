@@ -1,0 +1,7 @@
+# robots.txt for www.sail-gpl.org
+# SAIL-GPL — Secure AI General Public License. Public spec; crawling welcome.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.sail-gpl.org/sitemap.xml
