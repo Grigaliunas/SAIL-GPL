@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sail-toolkit"
+version = "1.0.0"
+description = "Reference CLI for SAIL-GPL v1.0 Secure-Release Metadata: sail sign | verify | audit"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "SAIL-GPL-1.0" }
+authors = [{ name = "The Open Reality Initiative" }]
+keywords = ["sail-gpl", "model-signing", "oms", "aibom", "provenance", "supply-chain"]
+dependencies = [
+    "cryptography>=41",
+]
+
+[project.optional-dependencies]
+# Post-quantum (ML-DSA / FIPS 204) and hybrid signing. Required only for
+# `--alg ml-dsa-65` / `--alg hybrid` (SAIL-GPL §7.5, T3 §8).
+pq = ["liboqs-python>=0.10"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+sail = "sail.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

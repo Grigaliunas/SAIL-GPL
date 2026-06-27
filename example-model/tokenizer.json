@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "model": {
+    "type": "BPE",
+    "vocab": {"<pad>": 0, "<unk>": 1, "<s>": 2, "</s>": 3, "hello": 4, "world": 5},
+    "merges": []
+  },
+  "added_tokens": [
+    {"id": 0, "content": "<pad>", "special": true},
+    {"id": 1, "content": "<unk>", "special": true}
+  ]
+}

@@ -2,3 +2,17 @@
 ~$*
 *.tmp
 *.docx
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# Signing keys must never be committed (SAIL-GPL §7.1)
+*.key
+signing.key

@@ -1,0 +1,9 @@
+{
+  "base_models": [],
+  "datasets": [],
+  "data_provenance": "No training data. This example model ships empty weights and was not trained on any dataset.",
+  "adapters": [],
+  "dependencies": ["safetensors-format>=0.4"],
+  "pipeline_ref": "https://open-reality.example/pipelines/sail-example",
+  "licenses": ["SAIL-GPL-1.0"]
+}
