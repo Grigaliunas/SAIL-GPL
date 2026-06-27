@@ -1,5 +1,7 @@
 # SAIL‑GPL — Secure AI General Public License
 
+[![CI](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml/badge.svg)](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml)
+
 **Version 1.0 — Assured‑Integrity Edition** · SPDX: `SAIL-GPL-1.0` *(proposed)* · Maintained under The Open Reality Initiative
 
 > **"You may own the weights. You may not ship them unverifiable."**
