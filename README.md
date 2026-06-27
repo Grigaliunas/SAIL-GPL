@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml/badge.svg)](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml)
 
+**🌐 Website: <https://grigaliunas.github.io/SAIL-GPL/>**
+
 **Version 1.0 — Assured‑Integrity Edition** · SPDX: `SAIL-GPL-1.0` *(proposed)* · Maintained under The Open Reality Initiative
 
 > **"You may own the weights. You may not ship them unverifiable."**
@@ -15,8 +17,7 @@ It is a **license proposal and engineering specification, not legal advice.** Ha
 | File | What it is |
 |---|---|
 | [`SAIL-GPL-1.0.md`](SAIL-GPL-1.0.md) | The canonical license text (§0–§17) — the source of truth. |
-| [`web/index.html`](web/index.html) | A self‑contained landing page presenting the license (served via GitHub Pages). |
-| [`web/sail-gpl-fullpage.png`](web/sail-gpl-fullpage.png) | Full‑page render of the landing page. |
+| [`web/index.html`](web/index.html) | A self‑contained landing page, served at [grigaliunas.github.io/SAIL-GPL](https://grigaliunas.github.io/SAIL-GPL/). |
 | [`sail/`](sail) | Reference `sail` toolkit (Python) — `sign` / `verify` / `audit` for SRM bundles (§14.3). |
 | [`example-model/`](example-model) | A complete, signed Secure‑Release Metadata bundle (§14.2). |
 
@@ -35,9 +36,9 @@ Every distribution must ship a complete, verifiable Secure‑Release Metadata bu
 
 Obligations scale with capability tier (T0 research through T3 frontier / high‑risk).
 
-## Preview
+## Website
 
-![SAIL‑GPL landing page](web/sail-gpl-fullpage.png)
+The landing page is live at **<https://grigaliunas.github.io/SAIL-GPL/>** (served from [`web/`](web) via GitHub Pages).
 
 ## Status
 
