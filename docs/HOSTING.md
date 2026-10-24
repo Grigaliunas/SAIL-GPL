@@ -22,10 +22,40 @@ remain in GitHub. The legacy GitHub Pages workflow is manual only.
 
 The native Git connection was established on 2026-10-24 after repository access
 was granted to the existing Vercel GitHub app. Push committed changes to main
-to trigger the project's native Vercel production deployment. Successful
-production deployments are assigned to the configured custom domains
-automatically. The repository's GitHub Actions CI remains a separate check;
-this connection does not itself make those checks a Vercel release gate.
+to trigger the project's native Vercel production deployment. Vercel builds
+the site immediately, but keeps the previous production release on the custom
+domains until the GitHub CI release gate passes for the same commit.
+
+## Required CI release gate
+
+The production Deployment Check uses GitHub as its provider and requires the
+exact check name `SAIL CI gate (push)`. It blocks production domain assignment.
+Automatic custom-domain assignment stays enabled so a passing release is
+published without a manual promotion.
+
+The release-gate job in .github/workflows/ci.yml depends on both the complete
+Python 3.10, 3.11, 3.12 and 3.13 matrix and the real ML-DSA-65 and hybrid
+verification job. It runs even when a dependency fails and succeeds only if
+both dependency results are exactly success. Failed, canceled, skipped or
+missing required checks do not authorize a production release.
+
+The event name is part of the check name. A pull request or manual workflow
+run cannot substitute its result for the main push check. If another CI test
+job is added, include it in the release gate's needs list and explicit result
+checks. Keep this check name unique across all workflows. If it is renamed,
+update the Vercel Deployment Check before the next release.
+
+The live check is managed in the Vercel project settings, not vercel.json:
+https://vercel.com/sarunas/sail-gpl/settings/build-and-deployment#deployment-checks.
+Its source is git-provider, provider github, target production, requires none
+and blocks deployment-alias. The requires value means that CI can run without
+waiting for a Vercel build or URL; it does not make the check optional.
+
+If CI fails, fix the commit and push again, or rerun the failed GitHub jobs.
+Do not use Force Promote to bypass the required check. A Vercel READY build
+alone does not prove that the production domains have been assigned.
+
+Official guide: https://vercel.com/docs/deployment-checks#github-checks.
 
 Root Directory is a Vercel project setting, not a rootDirectory field in
 vercel.json. The static output is web, so repository documentation, toolkit
@@ -63,12 +93,13 @@ change. IV documents up to one or two hours for a zone edit to take full effect.
 
 Official IV guide: https://pagalba.iv.lt/lt/articles/380773-zonos-redagavimas.
 
-## Manual deployment fallback
+## Manual deployment diagnostics
 
-Native Git deployment is the normal release path. Use this fallback only when
-an intentional manual release is needed. Run from the repository root, after
-tests and source changes have been committed. Do not cd into web: the remote
-Root Directory setting already selects that folder for this project.
+Native Git deployment with the required CI gate is the production release
+path. For troubleshooting, a manual deployment can be staged without assigning
+the production domains. Run from the repository root, after tests and source
+changes have been committed. Do not cd into web: the remote Root Directory
+setting already selects that folder for this project.
 
 The following workflow builds locally and uploads only the generated Build
 Output API artifacts. It avoids a manual upload of the full repository source.
@@ -80,15 +111,15 @@ vercel pull --scope sarunas --environment=production --yes
 vercel build --prod --scope sarunas
 vercel deploy --prebuilt --prod --skip-domain --scope sarunas
 vercel curl / --deployment DEPLOYMENT_URL
-vercel promote DEPLOYMENT_URL --scope sarunas --yes
 ```
 
 Before building, confirm that project inspection identifies team sarunas,
 project sail-gpl and Root Directory web. Review .vercel/output after the build
 and confirm that it contains only the intended public site assets. Use the
-actual URL returned by the staged production deployment for both curl and
-promote. The --skip-domain flag leaves the current public production release
-in place until the tested production deployment is promoted.
+actual URL returned by the staged production deployment for curl. The
+--skip-domain flag leaves the current public production release in place.
+Publish the fix by pushing main and letting the GitHub gate authorize the
+native Git deployment. Do not manually promote the diagnostic deployment.
 
 Keep the project's existing deployment protection. Authenticated vercel curl
 can test protected deployment URLs without making them public. The custom

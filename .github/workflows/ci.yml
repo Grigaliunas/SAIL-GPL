@@ -70,3 +70,21 @@ jobs:
         run: python -m pip install -e './sail[dev,pq]'
       - name: Require real post-quantum regressions and complete T3 flow
         run: python -m pytest -q sail/tests
+
+  release-gate:
+    name: SAIL CI gate (${{ github.event_name }})
+    if: ${{ always() }}
+    needs: [test, post-quantum]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every test job to succeed
+        env:
+          MATRIX_RESULT: ${{ needs.test.result }}
+          PQ_RESULT: ${{ needs.post-quantum.result }}
+        run: |
+          test "$MATRIX_RESULT" = success
+          test "$PQ_RESULT" = success
+      - name: Reject a canceled workflow
+        if: ${{ cancelled() }}
+        run: exit 1
