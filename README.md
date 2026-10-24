@@ -36,4 +36,6 @@ SAIL SRM v2 and native SAIBOM are custom formats. They do not claim OMS, Sigstor
 
 Website: [sail-gpl.org](https://sail-gpl.org/). Vercel hosts the static presentation site. This GitHub repository remains the source for the site, license and toolkit. The canonical draft takes precedence over independently maintained explanatory material.
 
+See [hosting and DNS instructions](docs/HOSTING.md) for the Vercel project, Interneto vizija records and manual deployment procedure.
+
 Copyright 2026 Dr. Šarūnas Grigaliūnas, The Open Reality Initiative.
