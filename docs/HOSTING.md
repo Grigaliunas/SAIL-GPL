@@ -61,6 +61,28 @@ Root Directory is a Vercel project setting, not a rootDirectory field in
 vercel.json. The static output is web, so repository documentation, toolkit
 source and local-only documents are not part of the public website output.
 
+### Failed CI drill verified on 2026-10-24
+
+A controlled main push added one intentionally failing pytest test and an
+invisible HTML marker. The Vercel gate configuration stayed unchanged.
+
+- Drill commit: b93b44290de342d0074aa1c8cf4784cd2616548a.
+- GitHub CI: https://github.com/Grigaliunas/SAIL-GPL/actions/runs/40106028251.
+  All four Python matrix jobs, the real post-quantum job and the release gate
+  failed. Logs confirmed that the intentional test caused the failures.
+- Vercel candidate: dpl_6cExPZLyMQxoPWqb8AMtzkTRFvzK. Its build reached READY
+  and its authenticated deployment URL contained the marker, but its required
+  GitHub check and deployment-alias stage failed. aliasAssigned stayed false.
+- The sail-gpl.org alias remained on dpl_CwxhnZAutrjrrxS5jYv8D9WTby47,
+  the successful a03c17acb0fd90e31692c051e86516a0db7f7b67 release.
+  Both configured apex addresses returned HTTPS 200 with valid certificates,
+  no drill marker and exactly the original HTML bytes.
+- Original and post-failure HTML SHA-256:
+  0a7a58b4e724869320cf13078be8b3be352e3a2acac5324495cad588de7b6e25.
+
+The temporary failing test and HTML marker are removed after the drill.
+No manual promotion or release-gate bypass was used.
+
 ## Interneto vizija DNS
 
 The domain retains its existing Interneto vizija nameservers. Do not transfer
