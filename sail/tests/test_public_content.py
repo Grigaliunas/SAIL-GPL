@@ -3,6 +3,7 @@
 from html.parser import HTMLParser
 from pathlib import Path
 import re
+import xml.etree.ElementTree as ET
 
 from sail import __version__, commands
 
@@ -16,6 +17,8 @@ class Page(HTMLParser):
         self.links = []
         self.handlers = []
         self.lang = None
+        self.canonical_urls = []
+        self.social_urls = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -25,6 +28,10 @@ class Page(HTMLParser):
             self.ids.append(attrs["id"])
         if "href" in attrs:
             self.links.append(attrs["href"])
+        if tag == "link" and attrs.get("rel") == "canonical":
+            self.canonical_urls.append(attrs.get("href"))
+        if tag == "meta" and attrs.get("property") == "og:url":
+            self.social_urls.append(attrs.get("content"))
         self.handlers.extend(name for name in attrs if name.startswith("on"))
 
 
@@ -68,3 +75,20 @@ def test_committed_example_is_verified_with_its_separate_test_trust_anchor():
     rep = commands.verify(ROOT / "example-model", trusted_key=ROOT / "sail/examples/example-public-key.json")
     assert rep.ok, rep.checks
     assert rep.identity_verified
+
+
+def test_public_site_uses_consistent_canonical_domain():
+    canonical = "https://sail-gpl.org/"
+    page = Page()
+    page.feed((ROOT / "web/index.html").read_text(encoding="utf-8"))
+    assert page.canonical_urls == [canonical]
+    assert page.social_urls == [canonical]
+    robots = (ROOT / "web/robots.txt").read_text(encoding="utf-8")
+    sitemap_lines = [line for line in robots.splitlines() if line.startswith("Sitemap:")]
+    assert sitemap_lines == [f"Sitemap: {canonical}sitemap.xml"]
+    sitemap = ET.parse(ROOT / "web/sitemap.xml")
+    locations = sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
+    assert [location.text for location in locations] == [canonical]
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"[sail-gpl.org]({canonical})" in readme
+    assert "Vercel hosts the static presentation site" in readme

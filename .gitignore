@@ -20,3 +20,6 @@ signing.key
 
 # Local-only project guidance (not shared)
 CLAUDE.md
+
+# Local Vercel project links and downloaded configuration
+.vercel/

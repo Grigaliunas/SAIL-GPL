@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://grigaliunas.github.io/SAIL-GPL/sitemap.xml
+Sitemap: https://sail-gpl.org/sitemap.xml

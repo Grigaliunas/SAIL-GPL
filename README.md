@@ -34,6 +34,6 @@ The fixture key is a demonstration trust anchor, not independent evidence of a r
 
 SAIL SRM v2 and native SAIBOM are custom formats. They do not claim OMS, Sigstore, SPDX, CycloneDX, keyless-signing, or PKI interoperability. The license uses a `LicenseRef-` identifier because no SPDX listing is claimed.
 
-Website: [grigaliunas.github.io/SAIL-GPL](https://grigaliunas.github.io/SAIL-GPL/). The canonical draft takes precedence over independently maintained explanatory material.
+Website: [sail-gpl.org](https://sail-gpl.org/). Vercel hosts the static presentation site. This GitHub repository remains the source for the site, license and toolkit. The canonical draft takes precedence over independently maintained explanatory material.
 
 Copyright 2026 Dr. Šarūnas Grigaliūnas, The Open Reality Initiative.
