@@ -49,13 +49,14 @@ jobs:
     name: Real ML-DSA-65 and hybrid verification
     runs-on: ubuntu-latest
     env:
-      OQS_INSTALL_PATH: ${{ runner.temp }}/sail-oqs
       SAIL_REQUIRE_PQ_TESTS: "1"
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Configure native runtime prefix
+        run: echo "OQS_INSTALL_PATH=$RUNNER_TEMP/sail-oqs" >> "$GITHUB_ENV"
       - name: Build pinned minimal liboqs runtime
         run: |
           git init "$RUNNER_TEMP/liboqs-source"
