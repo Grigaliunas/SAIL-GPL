@@ -1,0 +1,21 @@
+{
+  "evaluator": "SAIL fixture documentation review",
+  "independent": false,
+  "tests": [
+    {
+      "name": "prompt-injection",
+      "result": "not-applicable",
+      "notes": "The nonfunctional fixture has no inference engine or prompt interface. No resistance test was performed."
+    },
+    {
+      "name": "training-data-extraction",
+      "result": "not-applicable",
+      "notes": "The fixture has no trained parameters and was not trained on a dataset. No extraction experiment was performed."
+    },
+    {
+      "name": "poisoning-backdoor",
+      "result": "not-applicable",
+      "notes": "There is no training pipeline or adapter. The fixture demonstrates signed metadata rather than a poisoning evaluation."
+    }
+  ]
+}

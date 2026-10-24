@@ -1,15 +1,18 @@
 # Security Policy
 
-This Model Artifact is released under SAIL-GPL v1.0. Per §7.6, security issues
-are handled through coordinated vulnerability disclosure.
+This SAI Model Artifact is released under SAIL-GPL v1.0.
 
 ## Reporting a vulnerability
 
-- **Contact:** security@open-reality.example
-- **Policy:** https://open-reality.example/security
+- **Contact:** https://github.com/Grigaliunas/SAIL-GPL/security/advisories/new
+- **Policy:** https://github.com/Grigaliunas/SAIL-GPL/blob/main/SECURITY.md
 
-Please report privately and allow a reasonable time for a fix before public
-disclosure. We follow recognized coordinated-disclosure practice (e.g. the
-CoSAI AI incident-response guidance).
+## CVD process
 
-This contact and policy propagate to every Derivative Model (§7.6, §7.8).
+Report vulnerabilities privately using the contact above. The steward will
+acknowledge reports, investigate their impact, coordinate fixes and agree a
+public disclosure date with the reporter. Material security changes require
+a refreshed release, evaluation disclosure and signed release metadata.
+
+Derivative model stewards must preserve the inherited disclosure obligations
+and publish their own working contact and process.

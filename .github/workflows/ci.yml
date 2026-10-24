@@ -35,8 +35,37 @@ jobs:
         working-directory: sail
         run: python -m pytest -q
 
-      - name: Verify the example SRM bundle (§7)
-        run: sail verify ./example-model
+      - name: Verify the signed demonstration and its explicit test trust anchor
+        run: sail verify ./example-model --trusted-key sail/examples/example-public-key.json
 
       - name: Audit the repository tree
-        run: sail audit ./example-model
+        run: sail audit ./example-model --trusted-key sail/examples/example-public-key.json
+
+      - name: Check distributable package
+        if: matrix.python-version == '3.12'
+        run: python -m pip wheel ./sail --no-deps --wheel-dir "$RUNNER_TEMP/sail-dist"
+
+  post-quantum:
+    name: Real ML-DSA-65 and hybrid verification
+    runs-on: ubuntu-latest
+    env:
+      OQS_INSTALL_PATH: ${{ runner.temp }}/sail-oqs
+      SAIL_REQUIRE_PQ_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Build pinned minimal liboqs runtime
+        run: |
+          git init "$RUNNER_TEMP/liboqs-source"
+          git -C "$RUNNER_TEMP/liboqs-source" remote add origin https://github.com/open-quantum-safe/liboqs.git
+          git -C "$RUNNER_TEMP/liboqs-source" fetch --depth 1 origin 5a1a854b0dc9f2141bdc771c555ee60c37950183
+          git -C "$RUNNER_TEMP/liboqs-source" checkout --detach FETCH_HEAD
+          cmake -S "$RUNNER_TEMP/liboqs-source" -B "$RUNNER_TEMP/liboqs-build" -DBUILD_SHARED_LIBS=ON -DOQS_BUILD_ONLY_LIB=ON -DOQS_MINIMAL_BUILD=SIG_ml_dsa_65 -DCMAKE_INSTALL_PREFIX="$OQS_INSTALL_PATH"
+          cmake --build "$RUNNER_TEMP/liboqs-build" --parallel 2
+          cmake --install "$RUNNER_TEMP/liboqs-build"
+      - name: Install Python backends and tests
+        run: python -m pip install -e './sail[dev,pq]'
+      - name: Require real post-quantum regressions and complete T3 flow
+        run: python -m pytest -q sail/tests

@@ -1,25 +1,20 @@
-"""sail — reference toolkit for SAIL-GPL v1.0 Secure-Release Metadata (SRM).
+"""SAIL-GPL technical evidence verification for Super AI model releases."""
 
-Implements the three commands described in SAIL-GPL §14.3:
+__version__ = "1.1.0"
+FORMAT_VERSION = "2"
+LICENSE_ID = "LicenseRef-SAIL-GPL-1.0"
 
-    sail sign   ./model/     build the OMS manifest, sign it, write srm/
-    sail verify ./model/     check signature, manifest, AIBOM, attestation, CVD
-    sail audit  ./release/   walk a tree, report artifacts missing compliant SRM
-
-The bundle layout produced and checked is the one in SAIL-GPL §14.2.
-"""
-
-__version__ = "1.0.0"
-
-# Canonical SRM bundle file names (SAIL-GPL §14.2).
+# Native SAIL SRM v2 file names.
 SRM_DIR = "srm"
 MANIFEST_NAME = "manifest.json"
 SIGNATURE_NAME = "model.sig"
-AIBOM_NAME = "aibom.spdx.json"
+AIBOM_NAME = "saibom.json"
 ATTESTATION_NAME = "security-attestation.json"
 SECURITY_NAME = "SECURITY.md"
 MODEL_CARD_NAME = "MODEL_CARD.md"
+TRANSPARENCY_NAME = "transparency.json"
 
 # Files that live inside srm/ but are never themselves covered by the manifest
 # (manifest.json is the signed payload; model.sig is the detached signature).
-_UNCOVERED = {f"{SRM_DIR}/{MANIFEST_NAME}", f"{SRM_DIR}/{SIGNATURE_NAME}"}
+_UNCOVERED = {f"{SRM_DIR}/{MANIFEST_NAME}", f"{SRM_DIR}/{SIGNATURE_NAME}",
+              f"{SRM_DIR}/{TRANSPARENCY_NAME}"}

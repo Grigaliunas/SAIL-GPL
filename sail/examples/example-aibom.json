@@ -1,9 +1,11 @@
 {
   "base_models": [],
   "datasets": [],
-  "data_provenance": "No training data. This example model ships empty weights and was not trained on any dataset.",
+  "data_provenance": "No training data. This demonstration contains placeholder weights and was not trained on a dataset.",
   "adapters": [],
-  "dependencies": ["safetensors-format>=0.4"],
-  "pipeline_ref": "https://open-reality.example/pipelines/sail-example",
-  "licenses": ["SAIL-GPL-1.0"]
+  "dependencies": [],
+  "pipeline_ref": "sail/examples/README.md: documented local demonstration-generation procedure",
+  "licenses": [
+    "LicenseRef-SAIL-GPL-1.0"
+  ]
 }

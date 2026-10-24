@@ -1,47 +1,39 @@
-# SAIL‑GPL — Secure AI General Public License
+# SAIL-GPL: Secure Super AI General Public License
 
 [![CI](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml/badge.svg)](https://github.com/Grigaliunas/SAIL-GPL/actions/workflows/ci.yml)
 
-**🌐 Website: <https://grigaliunas.github.io/SAIL-GPL/>**
+**Version 1.0, public draft. Custom reference: `LicenseRef-SAIL-GPL-1.0`.**
 
-**Version 1.0 — Assured‑Integrity Edition** · SPDX: `SAIL-GPL-1.0` *(proposed)* · Maintained under The Open Reality Initiative
+SAIL-GPL proposes continuing release evidence for SAI model artifacts: signed provenance, a Super AI Bill of Materials (SAIBOM), a model card, explicit security test reports, and coordinated vulnerability disclosure. Its Python toolkit implements the custom SAIL Secure Release Metadata (SRM) v2 format.
 
-> **"You may own the weights. You may not ship them unverifiable."**
+**SAI (Super AI)** is the project's terminology for covered model artifacts, including present models and possible future capabilities. It does not establish that superintelligence exists or certify a capability. [Iternal's terminology discussion](https://iternal.ai/super-intelligence) is inspiration, not an adopted technical classification.
 
-SAIL‑GPL is a **copyleft license for AI model artifacts in which cybersecurity is a condition of the grant, not an afterthought.** You receive broad rights to use, study, modify, and redistribute a model — but whenever you distribute it or a derivative, you must ship verifiable **Secure‑Release Metadata**: a signed manifest, an AI Bill of Materials, a model card with risk disclosure, an adversarial‑security attestation, and a coordinated‑vulnerability‑disclosure contact. Strip the security, and you lose the license.
+This is a license proposal for community and legal review, not legal advice, an approved license standard, or security certification. `VERIFIED` means the documented technical evidence checks succeeded under the supplied trust policy. It does not certify legal compliance or absence of vulnerabilities.
 
-It is a **license proposal and engineering specification, not legal advice.** Have counsel review before adopting in production.
-
-## Contents
-
-| File | What it is |
+| File | Purpose |
 |---|---|
-| [`SAIL-GPL-1.0.md`](SAIL-GPL-1.0.md) | The canonical license text (§0–§17) — the source of truth. |
-| [`web/index.html`](web/index.html) | A self‑contained landing page, served at [grigaliunas.github.io/SAIL-GPL](https://grigaliunas.github.io/SAIL-GPL/). |
-| [`sail/`](sail) | Reference `sail` toolkit (Python) — `sign` / `verify` / `audit` for SRM bundles (§14.3). |
-| [`example-model/`](example-model) | A complete, signed Secure‑Release Metadata bundle (§14.2). |
+| [SAIL-GPL-1.0.md](SAIL-GPL-1.0.md) | Canonical draft conditions, Sections 0 through 17. |
+| [sail/](sail) | Reference signing, verification, and audit toolkit. |
+| [docs/SRM-FORMAT.md](docs/SRM-FORMAT.md) | Native v2 formats and verification boundaries. |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Substantive draft changes and migration notes. |
+| [example-model/](example-model) | Demonstration release with explicit evaluation limitations. |
+| [web/index.html](web/index.html) | Independently maintained presentation page. |
 
-## What it requires (Section 7)
+Release evidence follows derivatives. Supporting source code retains its own applicable license. A manifest records integrity without overriding upstream rights. The default model license version is 1.0 only. A later-version option requires express Steward permission.
 
-Every distribution must ship a complete, verifiable Secure‑Release Metadata bundle:
+All distributed tiers require reports addressing prompt injection, training-data extraction, and poisoning/backdoor checks. Each states `pass`, `fail`, or `not-applicable` with notes or evidence. Signing never generates passing results. T2 PQ or hybrid signing is recommended. T3 requires actual PQ or hybrid signing and three external trust anchors: the publisher key, a distinct evaluator key, and the log key used to verify an inclusion receipt. Those roles cannot share key material, including hybrid components. Evaluator signatures bind the actual model payload and card through `artifact_sha256`.
 
-- **§7.1 Signed provenance** — an OpenSSF Model Signing (OMS) signature over a manifest hashing all model files.
-- **§7.2 AI Bill of Materials** — base model, datasets or data‑provenance, adapters, dependencies, pipeline.
-- **§7.3 Model card and risk** — intended use, out‑of‑scope use, failure modes, security evals.
-- **§7.4 Adversarial attestation** — signed results vs. OWASP LLM Top 10, MITRE ATLAS, CoSAI Risk Map.
-- **§7.5 Crypto‑agility** — declared algorithms, re‑signing on revision, post‑quantum / hybrid for long‑lived models.
-- **§7.6 Coordinated disclosure** — a published security contact and CVD policy that propagates to derivatives.
-- **§7.7 Open verification** — verification tooling must be open and re‑implementable.
-- **§7.8 Re‑attest on derivation** — fine‑tune, merge, or quantize renews the obligations, never discharges them.
+From the repository root:
 
-Obligations scale with capability tier (T0 research through T3 frontier / high‑risk).
+```bash
+PYTHONPATH=sail/src python -m sail verify ./example-model \
+  --trusted-key sail/examples/example-public-key.json
+```
 
-## Website
+The fixture key is a demonstration trust anchor, not independent evidence of a real publisher identity. Obtain production anchors through a separately authenticated channel. See [the toolkit guide](sail/README.md) for signing and T3 requirements.
 
-The landing page is live at **<https://grigaliunas.github.io/SAIL-GPL/>** (served from [`web/`](web) via GitHub Pages).
+SAIL SRM v2 and native SAIBOM are custom formats. They do not claim OMS, Sigstore, SPDX, CycloneDX, keyless-signing, or PKI interoperability. The license uses a `LicenseRef-` identifier because no SPDX listing is claimed.
 
-## Status
+Website: [grigaliunas.github.io/SAIL-GPL](https://grigaliunas.github.io/SAIL-GPL/). The canonical draft takes precedence over independently maintained explanatory material.
 
-Draft for public review. Not yet OSI/SPDX‑registered. Verbatim copying of the license document is permitted; modification of the license text is not — you may, of course, license your model under it.
-
-© 2026 Dr. Šarūnas Grigaliūnas · The Open Reality Initiative
+Copyright 2026 Dr. Šarūnas Grigaliūnas, The Open Reality Initiative.

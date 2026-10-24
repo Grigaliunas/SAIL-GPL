@@ -1,26 +1,31 @@
-# Model Card — SAIL Example Model v1.0.0
+# SAIL SAI Example Model v1.0.0
 
-A tiny, non-functional example model used to demonstrate a complete SAIL-GPL
-Secure-Release Metadata (SRM) bundle. It produces no useful output and exists
-only so the `sail` toolkit has something real to sign, hash, and verify.
+A nonfunctional fixture demonstrating native SAIL SRM v2 release evidence.
+This artifact has no trained parameters and makes no capability claim.
 
-## Intended use (§7.3)
+## Intended use
 
-- **In scope:** demonstrating SRM structure, signing, and verification.
-- **Out of scope / prohibited:** any production inference. The weights are empty.
+Inspecting the SAI licensing workflow and testing signed release metadata.
 
-## Known limitations and failure modes
+## Out-of-scope use
 
-- The model has no trained parameters and cannot perform any task.
-- Tokenizer covers a toy vocabulary only.
+Production inference, safety decisions and evaluating actual SAI capabilities.
 
-## Security-relevant evaluation
+## Limitations
 
-See `srm/security-attestation.json` for the signed adversarial-security
-attestation (§7.4): prompt-injection, training-data-extraction, and
-poisoning/back-door checks, at tier T1 self-attestation.
+There is no inference implementation or training data. The tiny weights file
+exists only to demonstrate hashing. A successful metadata verification does
+not make this fixture a useful or secure model.
+
+## Security evaluation
+
+All three minimum evaluations are explicitly reported as not applicable in
+srm/security-attestation.json. The reasons explain the absence of an inference
+engine, training data and a training pipeline. No successful adversarial test
+or independent red-team exercise is claimed.
 
 ## License
 
-Released under SAIL-GPL v1.0. Distribution requires complete SRM (§7).
-Security contact: see `srm/SECURITY.md`.
+Draft SAIL-GPL v1.0, identifier LicenseRef-SAIL-GPL-1.0. SAI means Super AI
+in this project. It is a terminology choice, not a superhuman capability claim.
+See srm/SECURITY.md for the reporting route and CVD process.
